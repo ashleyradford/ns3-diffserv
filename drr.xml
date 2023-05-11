@@ -1,0 +1,21 @@
+<QoS>
+    <Name>DRR</Name>
+    <Queue no="1">
+        <MaxPackets>100</MaxPackets>
+        <Weight>100</Weight>
+        <Default>true</Default>
+        <DestPort>4000</DestPort>
+    </Queue>
+    <Queue no="2">
+        <MaxPackets>100</MaxPackets>
+        <Weight>200</Weight>
+        <Default>false</Default>
+        <DestPort>5000</DestPort>
+    </Queue>
+    <Queue no="3">
+        <MaxPackets>100</MaxPackets>
+        <Weight>300</Weight>
+        <Default>false</Default>
+        <DestPort>6000</DestPort>
+    </Queue>
+</QoS>

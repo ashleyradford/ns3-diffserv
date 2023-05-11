@@ -40,14 +40,12 @@ Ptr<Packet> TrafficClass::Remove() {
 
 // TrafficClass peek method
 Ptr<const Packet> TrafficClass::Peek() {
-    if (m_queue.empty()) {
+    if (IsEmpty()) {
         std::cout << "Queue empty." << std::endl;
         return nullptr;
     }
-    if (packets > 0) {
-        Ptr<Packet> p = m_queue.front();
-        return p;
-    }
+    Ptr<Packet> p = m_queue.front();
+    return p;
 }
 
 // TrafficClass match method
@@ -67,7 +65,7 @@ bool TrafficClass::match(Ptr<Packet> p) {
 
 // TrafficClass is empty method
 bool TrafficClass::IsEmpty() {
-    return m_queue.empty();
+    return packets == 0;
 }
 
 // TrafficClass get size method

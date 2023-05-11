@@ -52,6 +52,15 @@
 //     udp_packet5->AddHeader(pppHeader);
 //     std::cout << "Packet 5 created " << udp_packet5 << std::endl;
 
+//     Ptr<Packet> udp_packet6 = Create<Packet>(200);
+//     udpHeader.SetSourcePort(8000);
+//     udp_packet6->AddHeader(udpHeader);
+//     ipHeader.SetProtocol(17);
+//     ipHeader.SetSource(Ipv4Address("10.0.0.1"));
+//     udp_packet6->AddHeader(ipHeader);
+//     udp_packet6->AddHeader(pppHeader);
+//     std::cout << "Packet 6 created " << udp_packet6 << std::endl;
+
 //     // create Filter Elements
 //     SrcPortNumber fe1(4000);
 //     SrcPortNumber fe2(5000);
@@ -67,7 +76,7 @@
 //     TrafficClass trafficClass1;
 //     trafficClass1.SetMaxPackets(5);
 //     trafficClass1.SetWeight(200);
-//     trafficClass1.SetDefault(1);
+//     trafficClass1.SetDefault(1); // change to 0 when testing 113
 //     trafficClass1.AddFilter(&f1);
 
 //     // create Traffic Class 2
@@ -99,7 +108,7 @@
 //     drr.Dequeue(); // try to dequeue
 
 //     // dequeue packet from default filter
-//     drr.Enqueue(udp_packet5);
+//     drr.Enqueue(udp_packet6);
 //     std::cout << "Dequeueing default packet." << std::endl;
 //     Ptr<Packet> dequeued_p = drr.Dequeue();
 //     std::cout << dequeued_p << std::endl;

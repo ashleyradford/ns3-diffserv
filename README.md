@@ -53,6 +53,6 @@ DiffServ also includes the protected variable **DoDequeue**. This is included as
 
 ## Resources
 [RapidXML](https://github.com/Fe-Bell/RapidXML)<br>
-[Efficient Fair Queueing using Deficit Round Robin](http://cs621.cs.usfca.edu/v/resources/drr.pdf)<br>
+[Efficient Fair Queuing using Deficit Round Robin](http://cs621.cs.usfca.edu/v/resources/drr.pdf)<br>
 [Queue Class Reference](https://www.nsnam.org/docs/release/3.19/doxygen/classns3_1_1_queue.html)<br>
 [LaTeX SIGCOMM 18](https://github.com/scyue/latex-sigcomm18)

@@ -1,3 +1,6 @@
+#ifndef SIMULATION_H
+#define SIMULATION_H
+
 #include "diff_serv.h"
 #include "drr.h"
 #include "rapidxml.hpp"
@@ -20,15 +23,13 @@ struct QosData
 class Simulation {
     public:
         QosData data;
-        SPQ spq;
-        DRR drr;
+        Ptr<SPQ> spq;
+        Ptr<DRR> drr;
 
         uint32_t parseConfigs(std::string filename);
         void printConfigs(QosData data);
         void initializeSPQ();
         void initializeDRR();
-        uint32_t runSPQ();
-        uint32_t runDRR();
 };
 
 uint32_t Simulation::parseConfigs(std::string filename) {
@@ -41,7 +42,7 @@ uint32_t Simulation::parseConfigs(std::string filename) {
         // get the qos and name elements
         rapidxml::xml_node<>* qosNode = doc.first_node("QoS");
         rapidxml::xml_node<>* nameNode = qosNode->first_node("Name");
-        data.name = std::string(qosNode->value());
+        data.name = std::string(nameNode->value());
 
         // check QoS mechanism
         if (std::string(nameNode->value()) != "SPQ" && std::string(nameNode->value()) != "DRR") {
@@ -114,83 +115,51 @@ void Simulation::printConfigs(QosData data) {
 }
 
 void Simulation::initializeSPQ() {
+    // create instance of object
+    spq = CreateObject<SPQ>();
+
     // populate SPQ class
     for (int i = 0; i < data.count; i++)
     {
         // create and add filters
-        DstPortNumber fe(data.dest_ports[i]);
-        Filter f1;
-        f1.AddElement(&fe);
+        DstPortNumber *dstport_fe = new DstPortNumber(data.dest_ports[i]);
+        Filter *f1 = new Filter();
+        f1->AddElement(dstport_fe);
 
         // add traffic class values
-        TrafficClass trafficClass;
-        trafficClass.SetMaxPackets(data.max_packets[i]);
-        trafficClass.SetPriorityLevel(data.priorities[i]);
-        trafficClass.SetDefault(data.defaults[i]);
-        trafficClass.AddFilter(&f1);
-
+        TrafficClass *trafficClass = new TrafficClass();
+        trafficClass->SetMaxPackets(data.max_packets[i]);
+        trafficClass->SetPriorityLevel(data.priorities[i]);
+        trafficClass->SetDefault(data.defaults[i]);
+        trafficClass->AddFilter(f1);
+        
         // add traffic class to spq
-        spq.AddQueue(&trafficClass);
+        spq->AddQueue(trafficClass);
     }
 }
 
 void Simulation::initializeDRR() {
+    // create instance of object
+    drr = CreateObject<DRR>();
+
     // populate DRR class
     for (int i = 0; i < data.count; i++)
     {
         // create and add filters
-        DstPortNumber fe(data.dest_ports[i]);
-        Filter f1;
-        f1.AddElement(&fe);
+        DstPortNumber *dstport_fe = new DstPortNumber(data.dest_ports[i]);
+        Filter *f1 = new Filter();
+        f1->AddElement(dstport_fe);
 
         // add traffic class values
-        TrafficClass trafficClass;
-        trafficClass.SetMaxPackets(data.max_packets[i]);
-        trafficClass.SetWeight(data.weights[i]);
-        trafficClass.SetDefault(data.defaults[i]);
-        trafficClass.AddFilter(&f1);
+        TrafficClass *trafficClass = new TrafficClass();
+        trafficClass->SetMaxPackets(data.max_packets[i]);
+        trafficClass->SetWeight(data.weights[i]);
+        trafficClass->SetDefault(data.defaults[i]);
+        trafficClass->AddFilter(f1);
 
         // add traffic class to drr
-        drr.AddQueue(&trafficClass);
+        drr->AddQueue(trafficClass);
     }
 }
 
-uint32_t Simulation::runSPQ() {
-    return 1;
-}
-
-uint32_t Simulation::runDRR() { 
-    return 1;
-}
-
-int
-main(int argc, char* argv[])
-{
-    // check for specified config file
-    if (argc < 2) {
-        std::cout << "No config file provided." << std::endl;
-        return 1;
-    }
-
-    // ns3 command line: ./ns3 run 'traffic_class_test --config=scratch/proj2/spq.xml'
-    CommandLine cmd;
-    std::string config_file = "";
-    cmd.AddValue("config", "Config filepath.", config_file);
-    cmd.Parse(argc, argv);
-
-    // parse the xml file
-    Simulation sim;
-    if (sim.parseConfigs(config_file)) {
-        return 1;
-    }
-    sim.printConfigs(sim.data);
-
-    // prep and run simulations
-    if (sim.data.name == "SPQ") {
-        sim.initializeSPQ();
-        sim.runSPQ();
-    } else if (sim.data.name == "DRR") {
-        sim.initializeDRR();
-        sim.runDRR();
-    } 
-}
+#endif // SIMULATION_H

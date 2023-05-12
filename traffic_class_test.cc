@@ -67,4 +67,6 @@
 //     // peek should not remove, so we should not be able to add
 //     added = trafficClass.Enqueue(udp_packet);
 //     std::cout << "Packet not addded: " << added << std::endl;
+
+//     std::cout << "Get priority level: " << trafficClass.GetPriorityLevel() << std::endl;
 // }

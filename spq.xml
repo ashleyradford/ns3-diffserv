@@ -1,15 +1,15 @@
 <QoS>
     <Name>SPQ</Name>
     <Queue no="1">
-        <MaxPackets>100</MaxPackets>
-        <Priority>1</Priority>
+        <MaxPackets>30000</MaxPackets>
+        <Priority>2</Priority>
         <Default>true</Default>
-        <DestPort>4000</DestPort>
+        <DestPort>50000</DestPort>
     </Queue>
     <Queue no="2">
-        <MaxPackets>100</MaxPackets>
-        <Priority>2</Priority>
+        <MaxPackets>30000</MaxPackets>
+        <Priority>1</Priority>
         <Default>false</Default>
-        <DestPort>5000</DestPort>
+        <DestPort>40000</DestPort>
     </Queue>
 </QoS>

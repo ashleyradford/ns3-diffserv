@@ -30,6 +30,8 @@ The config file must include the following:
 </QoS>
 ```
 
+Note: it is up to the user to define weights that are above 0, otherwise DRR will not work as intended. It is also up to the user to define a default queue. If a default queue is not set, then packets that cannot be classified will be dropped (which may be intended). If multiple default queues are set, then the last queue added will act as the default queue (which may not be intended).
+
 ## Run
 To run the SPQ simulation:
 ```

@@ -47,7 +47,7 @@ main(int argc, char* argv[])
     }
 
     // ------------------- Build the Topology -------------------
-    
+
     // create three nodes
     Ptr<Node> n0 = CreateObject<Node>();
     Ptr<Node> r = CreateObject<Node>();
@@ -60,7 +60,9 @@ main(int argc, char* argv[])
     // create a PointToPoint channel and set its parameters
     PointToPointHelper pointToPoint1, pointToPoint2;
     pointToPoint1.SetDeviceAttribute("DataRate", StringValue("4Mbps")); // set link capacity
+    pointToPoint1.SetChannelAttribute("Delay", StringValue("10ms"));    // set prop delay
     pointToPoint2.SetDeviceAttribute("DataRate", StringValue("1Mbps")); // set link capacity
+    pointToPoint2.SetChannelAttribute("Delay", StringValue("10ms"));    // set prop delay
 
     // create net devices (or the interfaces for the nodes)
     NetDeviceContainer devices1, devices2;

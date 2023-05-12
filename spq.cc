@@ -1,7 +1,5 @@
 #include "spq.h"
 
-namespace ns3 {
-
 // SPQ constructor
 SPQ::SPQ() {}
 
@@ -34,6 +32,4 @@ Ptr<const Packet> SPQ::Schedule() const {
     }
 
     return queues[priority_queue]->Peek();
-}
-
 }

@@ -87,7 +87,7 @@
 //     spq.AddQueue(&trafficClass2);
 //     std::cout << "Trying to dequeue from empty queues:" << std::endl;
 //     spq.Dequeue(); // try to dequeue
-    
+
 //     // dequeue packet from default filter
 //     spq.Enqueue(udp_packet5);
 //     std::cout << "Dequeueing default packet." << std::endl;

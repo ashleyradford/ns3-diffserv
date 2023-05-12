@@ -99,16 +99,16 @@ main(int argc, char* argv[])
         UdpServerHelper server2(sim.data.dest_ports[1]);
 
         ApplicationContainer apps1 = server1.Install(all.Get(2));
-        apps1.Start(Seconds(0.0));
+        apps1.Start(Seconds(1.0));
         apps1.Stop(Seconds(40.0));
         ApplicationContainer apps2 = server2.Install(all.Get(2));
-        apps1.Start(Seconds(0.0));
+        apps2.Start(Seconds(1.0));
         apps2.Stop(Seconds(40.0));
 
         // create UdpClient applications on n0
         uint32_t maxPacketSize = 1000;
-        Time interPacketInterval = Seconds(0.001);
-        uint32_t maxPacketCount = 8000;
+        Time interPacketInterval = Seconds(0.002);
+        uint32_t maxPacketCount = 19000;
 
         UdpClientHelper client1(interfaces2.GetAddress(1), sim.data.dest_ports[0]);
         client1.SetAttribute("MaxPackets", UintegerValue(maxPacketCount));
@@ -121,11 +121,11 @@ main(int argc, char* argv[])
         client2.SetAttribute("PacketSize", UintegerValue(maxPacketSize));
 
         apps1 = client1.Install(all.Get(0));
-        apps1.Start(Seconds(1.0));
+        apps1.Start(Seconds(2.0));
         apps1.Stop(Seconds(40.0));
 
         apps2 = client2.Install(all.Get(0));
-        apps2.Start(Seconds(12.0));
+        apps2.Start(Seconds(14.0));
         apps2.Stop(Seconds(40.0));
 
         pointToPoint1.EnablePcap("pcap-files/spq-client-to-router", devices1.Get(1));
@@ -141,16 +141,16 @@ main(int argc, char* argv[])
         apps1.Start(Seconds(1.0));
         apps1.Stop(Seconds(40.0));
         ApplicationContainer apps2 = server2.Install(all.Get(2));
-        apps1.Start(Seconds(1.0));
+        apps2.Start(Seconds(1.0));
         apps2.Stop(Seconds(40.0));
         ApplicationContainer apps3 = server3.Install(all.Get(2));
-        apps1.Start(Seconds(1.0));
-        apps2.Stop(Seconds(40.0));
+        apps3.Start(Seconds(1.0));
+        apps3.Stop(Seconds(40.0));
 
         // create UdpClient applications on n0
         uint32_t maxPacketSize = 1000;
-        Time interPacketInterval = Seconds(0.001);
-        uint32_t maxPacketCount = 8000;
+        Time interPacketInterval = Seconds(0.002);
+        uint32_t maxPacketCount = 19000;
 
         UdpClientHelper client1(interfaces2.GetAddress(1), sim.data.dest_ports[0]);
         client1.SetAttribute("MaxPackets", UintegerValue(maxPacketCount));

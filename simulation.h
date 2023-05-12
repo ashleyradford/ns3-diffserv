@@ -7,8 +7,7 @@
 #include "rapidxml_utils.hpp"
 #include "spq.h"
 
-struct QosData
-{
+struct QosData {
     std::string name;
     uint32_t count;
     std::vector<uint32_t> max_packets;

@@ -4,12 +4,12 @@
         <MaxPackets>12000</MaxPackets>
         <Priority>2</Priority>
         <Default>true</Default>
-        <DestPort>50000</DestPort>
+        <DestPort>7000</DestPort>
     </Queue>
     <Queue no="2">
         <MaxPackets>12000</MaxPackets>
         <Priority>1</Priority>
         <Default>false</Default>
-        <DestPort>40000</DestPort>
+        <DestPort>9000</DestPort>
     </Queue>
 </QoS>

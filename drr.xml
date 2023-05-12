@@ -4,18 +4,18 @@
         <MaxPackets>12000</MaxPackets>
         <Weight>100</Weight>
         <Default>true</Default>
-        <DestPort>40000</DestPort>
+        <DestPort>6000</DestPort>
     </Queue>
     <Queue no="2">
         <MaxPackets>12000</MaxPackets>
         <Weight>200</Weight>
         <Default>false</Default>
-        <DestPort>50000</DestPort>
+        <DestPort>7000</DestPort>
     </Queue>
     <Queue no="3">
         <MaxPackets>12000</MaxPackets>
         <Weight>300</Weight>
         <Default>false</Default>
-        <DestPort>60000</DestPort>
+        <DestPort>9000</DestPort>
     </Queue>
 </QoS>

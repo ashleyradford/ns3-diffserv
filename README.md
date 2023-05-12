@@ -53,4 +53,5 @@ DiffServ also includes the protected variable **DoDequeue**. This is included as
 
 ## Resources
 [RapidXML](https://github.com/Fe-Bell/RapidXML)<br>
-[Queue Class Reference](https://www.nsnam.org/docs/release/3.19/doxygen/classns3_1_1_queue.html)
+[Queue Class Reference](https://www.nsnam.org/docs/release/3.19/doxygen/classns3_1_1_queue.html)<br>
+[LaTeX SIGCOMM 18](https://github.com/scyue/latex-sigcomm18)

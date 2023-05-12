@@ -14,7 +14,6 @@ class DRR : public DiffServ {
 
     protected:
         Ptr<Packet> DoDequeue() override;
-        Ptr<Packet> DoRemove() override;
 
     private:
         uint32_t active_queue;

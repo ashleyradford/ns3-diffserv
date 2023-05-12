@@ -22,12 +22,12 @@ class DiffServ : public Queue<Packet> {
 
     protected:
         virtual Ptr<Packet> DoDequeue();
-        virtual Ptr<Packet> DoRemove();
 
     private:
         std::vector<TrafficClass*> q_class;
 
         bool DoEnqueue(Ptr<Packet> p);
+        Ptr<Packet> DoRemove();
         Ptr<const Packet> DoPeek() const;
 };
 

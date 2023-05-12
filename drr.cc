@@ -62,13 +62,3 @@ Ptr<Packet> DRR::DoDequeue() {
     }
     return nullptr;
 }
-
-Ptr<Packet> DRR::DoRemove() {
-    Ptr<Packet> removed_packet = DiffServ::DoRemove();
-    if (removed_packet) {
-        active_queue = next_active_queue;
-        deficit_counter = next_deficit_counter;
-        return removed_packet;
-    }
-    return nullptr;
-}

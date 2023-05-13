@@ -52,16 +52,6 @@ std::vector<TrafficClass*> DiffServ::GetQueues() const {
     return q_class;
 }
 
-// DiffServ do enqueue method
-bool DiffServ::DoEnqueue(Ptr<Packet> p) {
-    uint32_t index = Classify(p);
-    if (index == -1) {
-        return 0;
-    }
-    q_class[index]->Enqueue(p);
-    return 1;
-}
-
 // DiffServ do dequeue method
 Ptr<Packet> DiffServ::DoDequeue() {
     Ptr<const Packet> scheduled_packet = Schedule();
@@ -73,6 +63,16 @@ Ptr<Packet> DiffServ::DoDequeue() {
     }
 
     return nullptr;
+}
+
+// DiffServ do enqueue method
+bool DiffServ::DoEnqueue(Ptr<Packet> p) {
+    uint32_t index = Classify(p);
+    if (index == -1) {
+        return 0;
+    }
+    q_class[index]->Enqueue(p);
+    return 1;
 }
 
 // DiffServ do remove method

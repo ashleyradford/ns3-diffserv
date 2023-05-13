@@ -18,9 +18,9 @@ class DiffServ : public Queue<Packet> {
         virtual Ptr<const Packet> Schedule() const = 0;
         virtual uint32_t Classify(Ptr<Packet> p);
         virtual void AddQueue(TrafficClass *q);
-        std::vector<TrafficClass*> GetQueues() const;
 
     protected:
+        std::vector<TrafficClass*> GetQueues() const;
         virtual Ptr<Packet> DoDequeue();
 
     private:

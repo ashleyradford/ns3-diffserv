@@ -20,7 +20,8 @@ main(int argc, char* argv[])
     // ------------------- Initiliaze QoS Mechanism -------------------
 
     // check for specified config file
-    if (argc < 2) {
+    if (argc < 2)
+    {
         std::cout << "No config file provided." << std::endl;
         return 1;
     }
@@ -33,15 +34,19 @@ main(int argc, char* argv[])
 
     // parse the xml file
     Simulation sim;
-    if (sim.parseConfigs(config_file)) {
+    if (sim.parseConfigs(config_file))
+    {
         return 1;
     }
 
     // prep and run simulations
-    if (sim.data.name == "SPQ") {
+    if (sim.data.name == "SPQ")
+    {
         std::cout << "Initializing SPQ object" << std::endl;
         sim.initializeSPQ();
-    } else if (sim.data.name == "DRR") {
+    }
+    else if (sim.data.name == "DRR")
+    {
         std::cout << "Initializing DRR object" << std::endl;
         sim.initializeDRR();
     }
@@ -85,15 +90,19 @@ main(int argc, char* argv[])
 
     // set up the spq
     Ptr<PointToPointNetDevice> crDevice = r->GetDevice(1)->GetObject<PointToPointNetDevice>();
-    if (sim.data.name == "SPQ") {
+    if (sim.data.name == "SPQ")
+    {
         crDevice->SetQueue(sim.spq);
-    } else if (sim.data.name == "DRR") {
+    }
+    else if (sim.data.name == "DRR")
+    {
         crDevice->SetQueue(sim.drr);
     }
 
     // ------------------- Add UDP Applications -------------------
 
-    if (sim.data.name == "SPQ") {
+    if (sim.data.name == "SPQ")
+    {
         // create UdpServer applications on n1
         UdpServerHelper server1(sim.data.dest_ports[0]);
         UdpServerHelper server2(sim.data.dest_ports[1]);
@@ -128,10 +137,12 @@ main(int argc, char* argv[])
         apps2.Start(Seconds(14.0));
         apps2.Stop(Seconds(40.0));
 
-        pointToPoint1.EnablePcap("scratch/proj2/Pre_SPQ.pcap", devices1.Get(1));
-        pointToPoint2.EnablePcap("scratch/proj2/Post_SPQ.pcap", devices2.Get(0));
+        pointToPoint1.EnablePcap("scratch/proj2/pcaps/Pre_SPQ", devices1.Get(1));
+        pointToPoint2.EnablePcap("scratch/proj2/pcaps/Post_SPQ", devices2.Get(0));
 
-    } else if (sim.data.name == "DRR") {
+    }
+    else if (sim.data.name == "DRR")
+    {
         // create UdpServer applications on n1
         UdpServerHelper server1(sim.data.dest_ports[0]);
         UdpServerHelper server2(sim.data.dest_ports[1]);
@@ -179,8 +190,8 @@ main(int argc, char* argv[])
         apps3.Start(Seconds(2.0));
         apps3.Stop(Seconds(40.0));
 
-        pointToPoint1.EnablePcap("scratch/proj2/Pre_DRR.pcap", devices1.Get(1));
-        pointToPoint2.EnablePcap("scratch/proj2/Post_DRR.pcap", devices2.Get(0));
+        pointToPoint1.EnablePcap("scratch/proj2/pcaps/Pre_DRR", devices1.Get(1));
+        pointToPoint2.EnablePcap("scratch/proj2/pcaps/Post_DRR", devices2.Get(0));
     }
 
     // ------------------- Run the Simulation -------------------

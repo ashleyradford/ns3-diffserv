@@ -5,7 +5,8 @@
 
 using namespace ns3;
 
-class SPQ : public DiffServ {
+class SPQ : public DiffServ
+{
     public:
         SPQ();
 

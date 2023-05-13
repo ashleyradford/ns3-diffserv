@@ -1,10 +1,16 @@
 #include "filter_elements.h"
 
-// SrcIPAddress constructor
+/** SrcIPAddress constructor */
 SrcIPAddress::SrcIPAddress(Ipv4Address addr) : default_address(addr) {}
 
-// SrcIPAddress match method
-bool SrcIPAddress::match(Ptr<Packet> p) const {
+/**
+ * Matches source IP address
+ * \param p packet to match
+ * \returns true if a match, false otherwise
+ */
+bool
+SrcIPAddress::match(Ptr<Packet> p) const
+{
     Ptr<Packet> p_copy = p->Copy();
 
     PppHeader pppHeader;
@@ -15,11 +21,17 @@ bool SrcIPAddress::match(Ptr<Packet> p) const {
     return header.GetSource() == default_address;
 }
 
-// SrcMask constructor
+/** SrcMask constructor */
 SrcMask::SrcMask(Ipv4Address addr, Ipv4Mask mask) : default_address(addr), default_mask(mask) {}
 
-// SrcMask match method
-bool SrcMask::match(Ptr<Packet> p) const {
+/**
+ * Matches source mask
+ * \param p packet to match
+ * \returns true if a match, false otherwise
+ */
+bool
+SrcMask::match(Ptr<Packet> p) const
+{
     Ptr<Packet> p_copy = p->Copy();
 
     PppHeader pppHeader;
@@ -30,11 +42,17 @@ bool SrcMask::match(Ptr<Packet> p) const {
     return default_mask.IsMatch(header.GetSource(), default_address);    
 }
 
-// SrcPortNumber constructor
+/** SrcPortNumber constructor */
 SrcPortNumber::SrcPortNumber(uint32_t port) : default_port(port) {}
 
-// SrcPortNumber match method
-bool SrcPortNumber::match(Ptr<Packet> p) const {
+/**
+ * Matches source port number
+ * \param p packet to match
+ * \returns true if a match, false otherwise
+ */
+bool
+SrcPortNumber::match(Ptr<Packet> p) const
+{
     Ptr<Packet> p_copy = p->Copy();
 
     PppHeader pppHeader;
@@ -44,26 +62,37 @@ bool SrcPortNumber::match(Ptr<Packet> p) const {
 
     // udp protocol number is 17 and tcp protocol is 6
     uint8_t protocol = header.GetProtocol();
-    if (protocol == 17) {
+    if (protocol == 17)
+    {
         UdpHeader udpHeader;
         p_copy->PeekHeader(udpHeader);
         uint16_t port = udpHeader.GetSourcePort();
         return port == default_port;
-    } else if (protocol == 6) {
+    }
+    else if (protocol == 6)
+    {
         TcpHeader tcpHeader;
         p_copy->PeekHeader(tcpHeader);
         uint16_t port = tcpHeader.GetSourcePort();
         return port == default_port;
-    } else {
+    }
+    else
+    {
         return 0;
     }
 }
 
-// DstIPAddress constructor
+/** DstIPAddress constructor */
 DstIPAddress::DstIPAddress(Ipv4Address addr) : default_address(addr) {}
 
-// DstIPAddress method
-bool DstIPAddress::match(Ptr<Packet> p) const {
+/**
+ * Matches destination IP address
+ * \param p packet to match
+ * \returns true if a match, false otherwise
+ */
+bool
+DstIPAddress::match(Ptr<Packet> p) const
+{
     Ptr<Packet> p_copy = p->Copy();
 
     PppHeader pppHeader;
@@ -74,11 +103,17 @@ bool DstIPAddress::match(Ptr<Packet> p) const {
     return header.GetDestination() == default_address;
 }
 
-// DstMask constructor
+/** DstMask constructor */
 DstMask::DstMask(Ipv4Address addr, Ipv4Mask mask) : default_address(addr), default_mask(mask) {}
 
-// DstMask method
-bool DstMask::match(Ptr<Packet> p) const {
+/**
+ * Matches destination mask
+ * \param p packet to match
+ * \returns true if a match, false otherwise
+ */
+bool
+DstMask::match(Ptr<Packet> p) const
+{
     Ptr<Packet> p_copy = p->Copy();
 
     PppHeader pppHeader;
@@ -89,11 +124,17 @@ bool DstMask::match(Ptr<Packet> p) const {
     return default_mask.IsMatch(header.GetSource(), default_address);  
 }
 
-// DstPortNumber constructor
+/** DstPortNumber constructor */
 DstPortNumber::DstPortNumber(uint32_t port) : default_port(port) {}
 
-// DstPortNumber method
-bool DstPortNumber::match(Ptr<Packet> p) const {
+/**
+ * Matches destination port number
+ * \param p packet to match
+ * \returns true if a match, false otherwise
+ */
+bool
+DstPortNumber::match(Ptr<Packet> p) const
+{
     Ptr<Packet> p_copy = p->Copy();
 
     PppHeader pppHeader;
@@ -103,26 +144,37 @@ bool DstPortNumber::match(Ptr<Packet> p) const {
     uint8_t protocol = header.GetProtocol();
 
     // udp protocol number is 17 and tcp protocol is 6
-    if (protocol == 17) {
+    if (protocol == 17)
+    {
         UdpHeader udpHeader;
         p_copy->PeekHeader(udpHeader);
         uint16_t port = udpHeader.GetDestinationPort();
         return port == default_port;
-    } else if (protocol == 6) {
+    }
+    else if (protocol == 6)
+    {
         TcpHeader tcpHeader;
         p_copy->PeekHeader(tcpHeader);
         uint16_t port = tcpHeader.GetDestinationPort();
         return port == default_port;
-    } else {
+    }
+    else
+    {
         return 0;
     }
 }
 
-// DstPortNumber constructor
+/** DstPortNumber constructor */
 ProtocolNumber::ProtocolNumber(uint32_t protocol) : default_protocol(protocol) {}
 
-// ProtocolNumber method
-bool ProtocolNumber::match(Ptr<Packet> p) const {
+/**
+ * Matches protocol number
+ * \param p packet to match
+ * \returns true if a match, false otherwise
+ */
+bool
+ProtocolNumber::match(Ptr<Packet> p) const
+{
     Ptr<Packet> p_copy = p->Copy();
 
     PppHeader pppHeader;

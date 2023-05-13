@@ -5,7 +5,8 @@
 
 using namespace ns3;
 
-class DRR : public DiffServ {
+class DRR : public DiffServ
+{
     public:
         DRR();
 

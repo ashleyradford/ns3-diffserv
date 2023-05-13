@@ -1,11 +1,17 @@
 #include "traffic_class.h"
 
-// TrafficClass constructor
 TrafficClass::TrafficClass() : packets(0) {}
 
-// TrafficClass enqueue method
-bool TrafficClass::Enqueue(Ptr<Packet> p) {
-    if (packets < maxPackets) {
+/**
+ * Enqueues a packet to m_queue
+ * \param p packet to enqueue
+ * \returns true if successfully enqueued, false otherwise
+ */
+bool
+TrafficClass::Enqueue(Ptr<Packet> p)
+{
+    if (packets < maxPackets)
+    {
         m_queue.push(p);
         packets++;
         return 1;
@@ -14,9 +20,15 @@ bool TrafficClass::Enqueue(Ptr<Packet> p) {
     return 0;
 }
 
-// TrafficClass dequeue method
-Ptr<Packet> TrafficClass::Dequeue() {
-    if (m_queue.empty()) {
+/**
+ * Dequeues a packet from m_queue
+ * \returns true if successfully dequeued, false otherwise
+ */
+Ptr<Packet>
+TrafficClass::Dequeue()
+{
+    if (m_queue.empty())
+    {
         std::cout << "Queue empty." << std::endl;
         return nullptr;
     }
@@ -26,9 +38,15 @@ Ptr<Packet> TrafficClass::Dequeue() {
     return p;
 }
 
-// TrafficClass remove method
-Ptr<Packet> TrafficClass::Remove() {
-    if (m_queue.empty()) {
+/**
+ * Removes a packet from m_queue
+ * \returns true if successfully removed, false otherwise
+ */
+Ptr<Packet>
+TrafficClass::Remove()
+{
+    if (m_queue.empty())
+    {
         std::cout << "Queue empty." << std::endl;
         return nullptr;
     }
@@ -38,9 +56,15 @@ Ptr<Packet> TrafficClass::Remove() {
     return p;
 }
 
-// TrafficClass peek method
-Ptr<const Packet> TrafficClass::Peek() {
-    if (IsEmpty()) {
+/**
+ * Peeks at m_queue's front packet
+ * \returns m_queue's front packet
+ */
+Ptr<const Packet>
+TrafficClass::Peek()
+{
+    if (IsEmpty())
+    {
         std::cout << "Queue empty." << std::endl;
         return nullptr;
     }
@@ -48,67 +72,126 @@ Ptr<const Packet> TrafficClass::Peek() {
     return p;
 }
 
-// TrafficClass match method
-bool TrafficClass::match(Ptr<Packet> p) {
+/**
+ * Matches a packet to each Filter in filters vector
+ * \param p packet to match
+ * \returns true if at least one filter is a match, false otherwise
+ */
+bool
+TrafficClass::match(Ptr<Packet> p)
+{
     // no filters, so automatic match
-    if (filters.size() == 0) {
+    if (filters.size() == 0)
+    {
         return 1;
     }
     // check filters if they exist
-    for (Filter *filter : filters) {
-        if (filter->match(p)) {
+    for (Filter *filter : filters)
+    {
+        if (filter->match(p))
+        {
             return 1;
         }
     }
     return 0;
 }
 
-// TrafficClass is empty method
-bool TrafficClass::IsEmpty() {
+/**
+ * Checks if there are no packets
+ * \returns true if empty, false otherwise
+ */
+bool
+TrafficClass::IsEmpty()
+{
     return packets == 0;
 }
 
-// TrafficClass get size method
-uint32_t TrafficClass::GetSize() {
+/**
+ * Getter for m_queue's size
+ * \returns number of packets in m_queues
+ */
+uint32_t
+TrafficClass::GetSize()
+{
     return m_queue.size();
 }
 
-// TrafficClass add filter method
-void TrafficClass::AddFilter(Filter *filter) {
+/**
+ * Adds a Filter to filters vector
+ * \param filter filter to add
+ */
+void
+TrafficClass::AddFilter(Filter *filter)
+{
     filters.push_back(filter);
 }
 
-// TrafficClass set max packets method
-void TrafficClass::SetMaxPackets(uint32_t max) {
+/**
+ * Set's m_queue's maximum packet size
+ * \param max max size
+ */
+void
+TrafficClass::SetMaxPackets(uint32_t max)
+{
     maxPackets = max;
 }
 
-// TrafficClass set weight method
-void TrafficClass::SetWeight(double_t w) {
+/**
+ * Setter for weight
+ * \param w weight
+ */
+void
+TrafficClass::SetWeight(double_t w)
+{
     weight = w;
 }
 
-// TrafficClass get weight method
-double_t TrafficClass::GetWeight() {
+/**
+ * Getter for weight
+ * \returns weight
+ */
+double_t
+TrafficClass::GetWeight()
+{
     return weight;
 }
 
-// TrafficClass set priority level method
-void TrafficClass::SetPriorityLevel(uint32_t level) {
+/**
+ * Setter for priority level
+ * \param level priority level
+ */
+void
+TrafficClass::SetPriorityLevel(uint32_t level)
+{
     priority_level = level;
 }
 
-// TrafficClass get priority level method
-uint32_t TrafficClass::GetPriorityLevel() {
+/**
+ * Getter for priority level
+ * \returns priority level
+ */
+uint32_t
+TrafficClass::GetPriorityLevel()
+{
     return priority_level;
 }
 
-// TrafficClass set default
-void TrafficClass::SetDefault(bool default_queue) {
+/**
+ * Setter for is default
+ * \param default_queue true if default, false otherwise
+ */
+void
+TrafficClass::SetDefault(bool default_queue)
+{
     isDefault = default_queue;
 }
 
-// TrafficClass get default
-bool TrafficClass::GetDefault() {
+/**
+ * Getter for is default
+ * \returns is default
+ */
+bool
+TrafficClass::GetDefault()
+{
     return isDefault;
 }

@@ -6,8 +6,8 @@
 
 using namespace ns3;
 
-// base abstract class
-class DiffServ : public Queue<Packet> {
+class DiffServ : public Queue<Packet>
+{
     public:
         DiffServ();
 

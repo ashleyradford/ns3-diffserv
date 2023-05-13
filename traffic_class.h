@@ -6,7 +6,8 @@
 
 using namespace ns3;
 
-class TrafficClass {
+class TrafficClass
+{
     public:
         TrafficClass();
 

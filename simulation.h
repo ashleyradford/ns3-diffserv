@@ -7,7 +7,9 @@
 #include "rapidxml_utils.hpp"
 #include "spq.h"
 
-struct QosData {
+/** Stores the xml configurations */
+struct QosData
+{
     std::string name;
     uint32_t count;
     std::vector<uint32_t> max_packets;
@@ -19,7 +21,8 @@ struct QosData {
     QosData() : count(0) {}
 };
 
-class Simulation {
+class Simulation
+{
     public:
         QosData data;
         Ptr<SPQ> spq;
@@ -31,7 +34,14 @@ class Simulation {
         void initializeDRR();
 };
 
-uint32_t Simulation::parseConfigs(std::string filename) {
+/**
+ * Parses the configs from an xml file
+ * \param filename filename of xml file
+ * \returns 0 if successfully parsed, 1 otherwise
+ */
+uint32_t
+Simulation::parseConfigs(std::string filename)
+{
     // check that file can be opened, parse the xml file
     try {
         rapidxml::file<> xmlFile(filename.c_str());
@@ -44,35 +54,42 @@ uint32_t Simulation::parseConfigs(std::string filename) {
         data.name = std::string(nameNode->value());
 
         // check QoS mechanism
-        if (std::string(nameNode->value()) != "SPQ" && std::string(nameNode->value()) != "DRR") {
+        if (std::string(nameNode->value()) != "SPQ" && std::string(nameNode->value()) != "DRR")
+        {
             std::cout << "Not a valid QoS mechanism" << std::endl;
             return 1;
         }
 
-        for (rapidxml::xml_node<>* queueNode = qosNode->first_node("Queue"); queueNode; queueNode = queueNode->next_sibling()) {
+        for (rapidxml::xml_node<>* queueNode = qosNode->first_node("Queue"); queueNode; queueNode = queueNode->next_sibling())
+        {
             // max packets spec
             rapidxml::xml_node<>* maxPacketsNode = queueNode->first_node("MaxPackets");
-            if (maxPacketsNode) {
+            if (maxPacketsNode)
+            {
                 data.max_packets.push_back(std::stoul(maxPacketsNode->value()));
             }
             // priority spec
             rapidxml::xml_node<>* priorityNode = queueNode->first_node("Priority");
-            if (priorityNode) {
+            if (priorityNode)
+            {
                 data.priorities.push_back(std::stoul(priorityNode->value()));
             }
             // weight spec
             rapidxml::xml_node<>* weightNode = queueNode->first_node("Weight");
-            if (weightNode) {
+            if (weightNode)
+            {
                 data.weights.push_back(std::stoul(weightNode->value()));
             }
             // default spec
             rapidxml::xml_node<>* defaultNode = queueNode->first_node("Default");
-            if (defaultNode) {
+            if (defaultNode)
+            {
                 data.defaults.push_back(std::string(defaultNode->value()) == "true");
             }
             // port spec
             rapidxml::xml_node<>* destPortNode = queueNode->first_node("DestPort");
-            if (destPortNode) {
+            if (destPortNode)
+            {
                 data.dest_ports.push_back(std::stoul(destPortNode->value()));
             }
             // total queue count
@@ -81,7 +98,9 @@ uint32_t Simulation::parseConfigs(std::string filename) {
 
         // free the memory
         doc.clear();
-    } catch (const std::runtime_error& e) {
+    }
+    catch (const std::runtime_error& e)
+    {
         std::cerr << "Failed to parse config file: " << e.what() << std::endl;
         return 1;
     }
@@ -89,31 +108,47 @@ uint32_t Simulation::parseConfigs(std::string filename) {
     return 0;
 }
 
-void Simulation::printConfigs(QosData data) {
+/**
+ * Prints the configs from QosData struct
+ * \param data QosData struct
+ */
+void
+Simulation::printConfigs(QosData data)
+{
     std::cout << "QoS: " << data.name << std::endl;
     std::cout << "Max Packets: " << std::endl;
-    for (int i = 0; i < data.max_packets.size(); i++) {
+    for (int i = 0; i < data.max_packets.size(); i++)
+    {
         std::cout << "  " << data.max_packets[i] << std::endl;
     }
     std::cout << "Priorities: " << std::endl;
-    for (int i = 0; i < data.priorities.size(); i++) {
+    for (int i = 0; i < data.priorities.size(); i++)
+    {
         std::cout << "  " << data.priorities[i] << std::endl;
     }
     std::cout << "Weights: " << std::endl;
-    for (int i = 0; i < data.weights.size(); i++) {
+    for (int i = 0; i < data.weights.size(); i++)
+    {
         std::cout << "  " << data.weights[i] << std::endl;
     }
     std::cout << "Defaults: " << std::endl;
-    for (int i = 0; i < data.defaults.size(); i++) {
+    for (int i = 0; i < data.defaults.size(); i++)
+    {
         std::cout << "  " << data.defaults[i] << std::endl;
     }
     std::cout << "Dest Ports: " << std::endl;
-    for (int i = 0; i < data.dest_ports.size(); i++) {
+    for (int i = 0; i < data.dest_ports.size(); i++)
+    {
         std::cout << "  " << data.dest_ports[i] << std::endl;
     }
 }
 
-void Simulation::initializeSPQ() {
+/**
+ * Initializes a SPQ object from the QosData struct
+ */
+void
+Simulation::initializeSPQ()
+{
     // create instance of object
     spq = CreateObject<SPQ>();
 
@@ -137,7 +172,12 @@ void Simulation::initializeSPQ() {
     }
 }
 
-void Simulation::initializeDRR() {
+/**
+ * Initializes a DRR object from the QosData struct
+ */
+void
+Simulation::initializeDRR()
+{
     // create instance of object
     drr = CreateObject<DRR>();
 

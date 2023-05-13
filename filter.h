@@ -5,7 +5,8 @@
 
 using namespace ns3;
 
-class Filter {
+class Filter
+{
     public:
         Filter();
 

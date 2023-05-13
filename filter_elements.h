@@ -9,14 +9,16 @@
 
 using namespace ns3;
 
-// abstract base class
-class FilterElement {
+/** Abstract base class */
+class FilterElement
+{
     public:
         virtual bool match(Ptr<Packet> p) const = 0;
 };
 
-// SrcIPAddress class derived from FilterElement
-class SrcIPAddress : public FilterElement {
+/** SrcIPAddress subclass */
+class SrcIPAddress : public FilterElement
+{
     private:
         Ipv4Address default_address;
 
@@ -26,8 +28,9 @@ class SrcIPAddress : public FilterElement {
         bool match(Ptr<Packet> p) const override;
 };
 
-// SrcMask class derived from FilterElement
-class SrcMask : public FilterElement {
+/** SrcMask subclass */
+class SrcMask : public FilterElement
+{
     private:
         Ipv4Address default_address;
         Ipv4Mask default_mask;
@@ -38,8 +41,9 @@ class SrcMask : public FilterElement {
         bool match(Ptr<Packet> p) const override;
 };
 
-// SrcPortNumber class derived from FilterElement
-class SrcPortNumber : public FilterElement {
+/** SrcPortNumber subclass */
+class SrcPortNumber : public FilterElement
+{
     private:
         uint32_t default_port;
 
@@ -49,8 +53,9 @@ class SrcPortNumber : public FilterElement {
         bool match(Ptr<Packet> p) const override;
 };
 
-// DstIPAddress class derived from FilterElement
-class DstIPAddress : public FilterElement {
+/** DstIPAddress subclass */
+class DstIPAddress : public FilterElement
+{
     private:
         Ipv4Address default_address;
 
@@ -60,8 +65,9 @@ class DstIPAddress : public FilterElement {
         bool match(Ptr<Packet> p) const override;
 };
 
-// DstMask class derived from FilterElement
-class DstMask : public FilterElement {
+/** DstMask subclass */
+class DstMask : public FilterElement
+{
     private:
         Ipv4Address default_address;
         Ipv4Mask default_mask;
@@ -72,8 +78,9 @@ class DstMask : public FilterElement {
         bool match(Ptr<Packet> p) const override;
 };
 
-// DstPortNumber class derived from FilterElement
-class DstPortNumber : public FilterElement {
+/** DstPortNumber subclass */
+class DstPortNumber : public FilterElement
+{
     private:
         uint32_t default_port;
 
@@ -83,8 +90,9 @@ class DstPortNumber : public FilterElement {
         bool match(Ptr<Packet> p) const override;
 };
 
-// ProtocolNumber class derived from FilterElement
-class ProtocolNumber : public FilterElement {
+/** ProtocolNumber subclass */
+class ProtocolNumber : public FilterElement
+{
     private:
         uint32_t default_protocol;
 

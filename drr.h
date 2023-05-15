@@ -10,11 +10,9 @@ class DRR : public DiffServ
     public:
         DRR();
 
+        Ptr<Packet> Dequeue() override;
         Ptr<const Packet> Schedule() const override;
         void AddQueue(TrafficClass *q) override;
-
-    protected:
-        Ptr<Packet> DoDequeue() override;
 
     private:
         uint32_t active_queue;

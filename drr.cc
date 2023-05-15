@@ -3,6 +3,24 @@
 DRR::DRR() : active_queue(0) {}
 
 /**
+ * Dequeues the next scheduled packet and then updates
+ * the active_queue index and next_deficit_counter vector
+ * \returns packet that has been dequeued
+ */
+Ptr<Packet>
+DRR::Dequeue()
+{
+    Ptr<Packet> dequeued_packet = DiffServ::Dequeue();
+    if (dequeued_packet)
+    {
+        active_queue = next_active_queue;
+        deficit_counter = next_deficit_counter;
+        return dequeued_packet;
+    }
+    return nullptr;
+}
+
+/**
  * Finds the next scheduled packet by looping through the TrafficClasses
  * in q_class. The next sheduled packet will be from the first queue that
  * that has enough deficit to send out a packet. Each new loop of the
@@ -75,22 +93,4 @@ DRR::AddQueue(TrafficClass *tc)
 {
     DiffServ::AddQueue(tc);
     deficit_counter.push_back(0);
-}
-
-/**
- * Dequeues the next scheduled packet and then updates
- * the active_queue index and next_deficit_counter vector
- * \returns packet that has been dequeued
- */
-Ptr<Packet>
-DRR::DoDequeue()
-{
-    Ptr<Packet> dequeued_packet = DiffServ::DoDequeue();
-    if (dequeued_packet)
-    {
-        active_queue = next_active_queue;
-        deficit_counter = next_deficit_counter;
-        return dequeued_packet;
-    }
-    return nullptr;
 }

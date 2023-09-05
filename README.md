@@ -1,4 +1,4 @@
-# DiffServ:
+# DiffServ
 A base class in ns3 that simulates differentiated services.
 
 ## Requirements

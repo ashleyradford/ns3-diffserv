@@ -1,5 +1,5 @@
 # DiffServ
-A base class in ns3 that simulates differentiated services.
+A base class in ns3 that simulates differentiated services. See [paper](https://github.com/ashleyradford/ns3-diffserv/blob/main/report.pdf) for detailed approach and validations.
 
 ## Requirements
 Requires rapidxml header files `rapidxml.hpp` and `rapidxml_utils.hpp` (included).
